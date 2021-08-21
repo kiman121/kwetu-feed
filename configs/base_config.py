@@ -20,12 +20,12 @@ class StagConfig(Config):
     SQLALCHEMY_DATABASE_URI = ""
 
 class DevConfig(Config):
-    # FLASK_ENV = os.environ.get("FLASK_ENV")
-    # DATABASE = os.environ.get("DATABASE")
-    # POSTGRES_USER = os.environ.get("POSTGRES_USER")
-    # POSTGRES_PASSWORD = os.environ.get("POSTGRES_PASSWORD")
-    # SQLALCHEMY_DATABASE_URI = os.environ.get("SQLALCHEMY_DATABASE_URI")
-    DEBUG = True
+    FLASK_ENV = os.environ.get("FLASK_ENV")
+    DATABASE = os.environ.get("DATABASE")
+    POSTGRES_USER = os.environ.get("POSTGRES_USER")
+    POSTGRES_PASSWORD = os.environ.get("POSTGRES_PASSWORD")
+    SQLALCHEMY_DATABASE_URI = os.environ.get("SQLALCHEMY_DATABASE_URI")
+    # DEBUG = True
 
 config_options = {
     'development':DevConfig,
