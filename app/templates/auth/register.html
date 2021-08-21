@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="signup-wrapper">
+  <div class="signup-box">
+    <h4>Zetu<span class="text-primary">Feed</span></h4>
+    <p class="login-box-msg">Fill in the form to create an account</p>
+    {% for message in get_flashed_messages() %}
+      <div class="alert alert-danger">
+        <button type="button" class="close" data-dismiss="alert">
+          &times
+        </button>
+        {{message}}
+      </div>
+    {% endfor %}
+    <form action="{{url_for('auth.register')}}" method="POST">
+      {{registration_form.hidden_tag()}}
+      <div class="form-group mb-2">
+        {{registration_form.first_name(placeholder="First name", size=30,
+        class_="form-control")}}
+      </div>
+      <div class="form-group mb-2">
+        {{registration_form.other_names(placeholder="Other names", size=30,
+        class_="form-control")}}
+      </div>
+      <div class="form-group mb-2">
+        {{registration_form.username(placeholder="Username", size=30,
+        class_="form-control")}}
+      </div>
+      <div class="form-group mb-2">
+        {{registration_form.email(placeholder="Email address", size=30,
+        class_="form-control")}}
+      </div>
+      <div class="form-group mb-2">
+        {{registration_form.password(placeholder="Password",size=30,
+        class_="form-control")}}
+      </div>
+      <div class="form-group mb-2">
+        {{registration_form.password_confirm(placeholder="Confirm password", size=30,
+        class_="form-control")}}
+      </div>
+      <a href="{{url_for('auth.login')}}">Already have an account</a>
+      <div class="div">{{registration_form.submit(class_="btn-submit")}}</div>
+    </form>
+  </div>
+</div>
+
+<div class="d-flex align-items-center justify-content-center">
+  <div class="col"></div>
+  <!-- <div class="col">
+        <img src="{{url_for('static', filename='photos/bg_images/blog-2.jpg')}}" alt="">
+    </div> -->
+</div>
+{%endblock%}
