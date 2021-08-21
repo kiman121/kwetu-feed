@@ -4,7 +4,8 @@ import os
 class Config:
     # FLASK_APP = os.environ('FLASK_APP')
     SECRET_KEY = secrets.token_hex(16)
-    # SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    UPLOADED_PHOTOS_DEST = 'app/static/photos'
 
 class ProdConfig(Config):
     DATABASE = ""

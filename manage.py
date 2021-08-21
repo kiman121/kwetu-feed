@@ -1,15 +1,17 @@
-from app import create_app
+from app import create_app, db
 from flask_script import Manager, Server
-
+from flask_migrate import Migrate, MigrateCommand
+from models.category import Category
+from models.comment import Comment
+from models.post import Post
+from models.user import User
 
 # Creating app instance
 app = create_app(('development'))
 manager = Manager(app)
 manager.add_command('server', Server)
-# migrate = Migrate(app, db)
-# manager.add_command('db', MigrateCommand)
-
-
+migrate = Migrate(app, db)
+manager.add_command('db', MigrateCommand)
 
 
 if __name__ == '__main__':

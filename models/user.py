@@ -1,15 +1,15 @@
-from . import db
+from app import db, login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 from flask_login import UserMixin
-from . import login_manager
+# from app import login_manager
 
-@login_manager.user_loader
-def load_user(user_id):
-    '''
-    Callback function that retrieves a user when a unique identifier is passed
-    '''
-    return User.query.get(int(user_id))
+# @login_manager.user_loader
+# def load_user(user_id):
+#     '''
+#     Callback function that retrieves a user when a unique identifier is passed
+#     '''
+#     return User.query.get(int(user_id))
 
 class User(UserMixin, db.Model):
     '''
