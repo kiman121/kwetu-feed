@@ -18,6 +18,7 @@
       </div>
       <div class="modal-body">
         <form action="{{url_for('main.new_post')}}" method="POST">
+          {% set new_post_form = context['new_post_form'] %}
           {{new_post_form.hidden_tag()}}
           <div class="form-group mb-2">
             <!-- <select class="form-control" name="category" id="">

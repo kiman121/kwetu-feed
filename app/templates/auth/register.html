@@ -13,6 +13,7 @@
       </div>
     {% endfor %}
     <form action="{{url_for('auth.register')}}" method="POST">
+      {% set registration_form = context['registration_form'] %}
       {{registration_form.hidden_tag()}}
       <div class="form-group mb-2">
         {{registration_form.first_name(placeholder="First name", size=30,
