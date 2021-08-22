@@ -85,7 +85,7 @@
             {% if user == current_user.user and current_user.is_authenticated %}
               {{current_user.first_name}}
               <a class="btn btn-sm btn-outline-secondary" href="{{url_for('auth.logout')}}">Log out</a>
-              <a class="btn btn-sm btn-outline-secondary" href="{{url_for('main.add_post')}}">Add post</a>
+              <a class="btn btn-sm btn-outline-secondary add-new-post" href="#">Add post</a>
             {%else%}
               <a class="btn btn-sm btn-outline-secondary" href="{{url_for('auth.login')}}">Log in</a>
               <a class="btn btn-sm btn-outline-secondary sign-up" href="{{url_for('auth.register')}}">Sign up</a>

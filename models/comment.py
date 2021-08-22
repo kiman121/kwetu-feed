@@ -7,7 +7,7 @@ class Comment(db.Model):
     '''
     __tablename__ = 'comments'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement = True)
     post_id = db.Column(db.Integer, db.ForeignKey("posts.id"))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     comments = db.Column(db.String(255))

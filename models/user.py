@@ -18,9 +18,9 @@ class User(UserMixin, db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(255))
-    other_names = db.Column(db.String(255))
-    username = db.Column(db.String(255))
+    first_name = db.Column(db.String(255), nullable=False)
+    other_names = db.Column(db.String(255), nullable=False)
+    username = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), unique=True, index=True)
     profile_pic_path = db.Column(db.String(255))
     password_hash = db.Column(db.String(255))
