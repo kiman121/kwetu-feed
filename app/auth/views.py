@@ -2,6 +2,7 @@ from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user, login_required
 from . import auth
 from models.user import User
+from models.category import Category
 from .forms import LoginForm, RegistrationForm
 from .. import db
 
@@ -22,8 +23,13 @@ def login():
 
         flash('Invalid username or password')
 
-    title = 'ZetuFeed - login'
-    return render_template('auth/login.html', login_form=login_form, title=title)
+    data = {
+        "title": 'ZetuFeed - login',
+        "login_form":login_form,
+        "categories": Category.get_categories()
+    }
+
+    return render_template('auth/login.html', context=data)
 
 
 @auth.route('/register', methods=['GET', 'POST'])
@@ -39,9 +45,13 @@ def register():
         db.session.commit()
 
         return redirect(url_for('auth.login'))
-    title = "ZetuFeed - new account"
-
-    return render_template('auth/register.html', registration_form=form, title=title)
+    
+    data = {
+        "title": "ZetuFeed - new account",
+        "registration_form":form,
+        "categories": Category.get_categories()
+    }
+    return render_template('auth/register.html', context=data)
 
 
 @auth.route('/logout')
