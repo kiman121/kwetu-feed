@@ -1,15 +1,85 @@
-.page-header{
-    position: fixed;
-    z-index: 999;
-    background: #000;
-    width: 100%;
-    top: 0;
+/*-----------------
+    General
+ -----------------------*/
+.page-header {
+  position: fixed;
+  z-index: 999;
+  background: #000;
+  width: 100%;
+  top: 0;
+  color: #fff;
+}
+.position-sticky {
+  top: 9rem !important;
+}
+.page-wrapper .main,
+.login-wrapper {
+  padding-top: 9em;
+}
+.btn-submit{
+    outline: none;
+    border: none;
+    margin: 1rem 0;
+    padding: .5rem 1rem;
+    width: 150px;
+    border-radius: 8px;
+    background-color: #0096c7;
     color: #fff;
+    font-weight: 600;
 }
-.position-sticky{
-    top: 9rem !important;
+.text-primary {
+  color: #0096c7;
 }
-
-.page-wrapper .main{
-    padding-top: 9em;
+/*-----------------
+    Modal headers
+ -----------------------*/
+.modal .modal-header {
+  border-bottom: none;
 }
+.modal {
+  text-align: center;
+  padding: 0 !important;
+}
+.modal:before {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
+}
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+/*-----------------
+    Login & Register
+ -----------------------*/
+.login-wrapper,
+.signup-wrapper {
+  padding-top: 9em;
+  width: 90%;
+  margin: 0 auto;
+}
+.login-box,
+.signup-box {
+  margin: 0 auto;
+  width: 600px;
+  text-align: center;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  padding: 1em;
+  border-radius: 6px;
+}
+.login-box form,
+.signup-box form,
+.login-box .alert,
+.signup-box .alert {
+  text-align: left;
+}
+.login-box h4,
+.signup-box h4 {
+  font-weight: 900;
+}
+/* .modal #add_new_post{
+    width: 800px !important;
+} */
