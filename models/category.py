@@ -7,6 +7,14 @@ class Category(db.Model):
     '''
     __tablename__ = 'categories'
 
-    id = db.Column(db.Integer, primary_key=True)
-    category_name = db.Column(db.String(255))
+    id = db.Column(db.Integer, primary_key=True, autoincrement = True)
+    category_name = db.Column(db.String(255), nullable=False)
     posts = db.relationship('Post', backref='category', lazy='dynamic')
+
+
+    def get_categories():
+        '''
+        Method that retrieves post categories (all)
+        '''
+        categories = Category.query.all()
+        return categories
