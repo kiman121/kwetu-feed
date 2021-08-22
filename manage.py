@@ -6,13 +6,19 @@ from models.comment import Comment
 from models.post import Post
 from models.user import User
 
+
 # Creating app instance
 app = create_app(('development'))
 manager = Manager(app)
-# manager.add_command('server', Server)
 migrate = Migrate(app, db)
-# manager.add_command('db', MigrateCommand)
 
+def datetimeformat(value, format):
+    if format == 'long':
+        format='%B %d, %Y'
+    elif format == 'short':
+        format='%b %Y'
+    return value.strftime(format)
+app.jinja_env.filters['datetimeformat'] = datetimeformat
 
 if __name__ == '__main__':
     manager.run()
