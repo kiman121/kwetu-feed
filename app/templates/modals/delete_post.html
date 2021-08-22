@@ -1,0 +1,34 @@
+<div
+  class="modal custom-modal fade"
+  id="delete_post"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="form-header">
+            <h3>Delete Post</h3>
+            <p>Are you sure want to delete?</p>
+        </div>
+        <form action="{{url_for('main.delete_post')}}" method="POST">
+          {% set delete_form = context['delete_form'] %}
+          {{delete_form.hidden_tag()}}
+          <input class="selected-post-delete" type="hidden" name="post_id" value="" />
+          
+          <div class="modal-btn">
+              <div class="row">
+                <div class="col-md-6">
+                    {{delete_form.submit(class_="btn-submit")}}
+                </div>
+                <div class="col-md-6">
+                    <input type="button" class="btn-submit btn-modal-dismiss" value="Cancel">
+                </div>
+              </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
