@@ -23,15 +23,24 @@ class AddCommentForm(FlaskForm):
     '''
     Class to create add comment form
     '''
-    comment = StringField('Add comment', validators=[Required()])
-    submit = SubmitField('Add')
+    comment = TextAreaField('Add comment', validators=[Required()])
+    endpoint = StringField('Endpoint', validators=[Required()])
+    post_id = IntegerField("Post id", validators=[InputRequired()])
+    submit = SubmitField('Add Comment')
+
+class DeleteCommentForm(FlaskForm):
+    '''
+    Class to create delete comment form
+    '''
+    comment_id = IntegerField("Comment id", validators=[InputRequired()])
+    submit = SubmitField('Delete Comment')
 
 class DeletePostForm(FlaskForm):
     '''
     Class to create delete post form
     '''
     post_id = IntegerField("Post id", validators=[InputRequired()])
-    submit = SubmitField('Delete')
+    submit = SubmitField('Delete Post')
 
 class EditPostForm(FlaskForm):
     '''
@@ -44,8 +53,10 @@ class EditPostForm(FlaskForm):
     post = TextAreaField('Your post',  validators=[Required()])
     title = StringField('Title', validators=[Required()])
     endpoint = StringField('Endpoint', validators=[Required()])
-    post_id = IntegerField("Post id", validators=[InputRequired()])
-    submit = SubmitField('Post')
+    post_id = IntegerField('Post id', validators=[InputRequired()])
+    submit = SubmitField('Edit Post')
+
+
 # class UpdateProfile(FlaskForm):
 #     '''
 #     Class to create an update profile form
