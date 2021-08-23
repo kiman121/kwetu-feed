@@ -2,9 +2,8 @@ from app import create_app, db
 from flask_script import Manager, Server
 from flask_migrate import Migrate, MigrateCommand
 from models.category import Category
-from models.comment import Comment
-from models.post import Post
 from models.user import User
+from models.category import Category
 
 
 # Creating app instance

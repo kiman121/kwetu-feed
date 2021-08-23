@@ -6,7 +6,6 @@ from models.category import Category
 from .forms import LoginForm, RegistrationForm
 from .. import db
 
-
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     '''
