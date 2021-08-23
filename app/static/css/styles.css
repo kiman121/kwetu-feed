@@ -16,19 +16,63 @@
 .login-wrapper {
   padding-top: 9em;
 }
-.btn-submit{
-    outline: none;
-    border: none;
-    margin: 1rem 0;
-    padding: .5rem 1rem;
-    width: 150px;
-    border-radius: 8px;
-    background-color: #0096c7;
-    color: #fff;
-    font-weight: 600;
+.btn-submit {
+  outline: none;
+  border: none;
+  margin: 1rem 0;
+  padding: 0.5rem 1rem;
+  width: 150px;
+  border-radius: 8px;
+  background-color: #0096c7;
+  color: #fff;
+  font-weight: 600;
+}
+.btn-block .btn-submit {
+  display: block;
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+}
+.btn-block .btn-submit:hover {
+    color:#fff;
 }
 .text-primary {
   color: #0096c7;
+}
+.text-white {
+  color: #fff !important;
+}
+.decoration-none {
+  text-decoration: none;
+}
+.icon-edit,
+.icon-delete {
+  text-decoration: none;
+  color: white;
+  padding: 0.2em 0.75em;
+  border-radius: 3px;
+  margin: 0 0.2em;
+}
+.icon-edit {
+  background: black;
+}
+.icon-delete {
+  background: red;
+}
+.icon-edit:hover,
+.icon-delete:hover {
+  color: #fff;
+}
+.form-header {
+  color: #333;
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.form-header p {
+  color: #929292;
+  font-size: 15px;
+  margin-bottom: 0;
 }
 /*-----------------
     Modal headers
@@ -52,6 +96,28 @@
   text-align: left;
   vertical-align: middle;
 }
+.custom-modal .modal-body {
+  padding: 30px;
+}
+.custom-modal .modal-content {
+  border: 0;
+  border-radius: 10px;
+}
+.modal-btn > .row > div {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+/* .btn-modal{
+    background-color: #fff;
+    border: 1px solid #667eea;
+    border-radius: 50px;
+    color: #667eea;
+    display: block;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 10px 20px;
+    text-align: center;
+} */
 /*-----------------
     Login & Register
  -----------------------*/
@@ -83,3 +149,42 @@
 /* .modal #add_new_post{
     width: 800px !important;
 } */
+
+/*-----------------
+    Login & Register
+ -----------------------*/
+.add-comment {
+  padding-left: 3em;
+}
+.add-comment a {
+  color: #929292;
+  font-size: 15px;
+  margin-bottom: 0;
+  text-decoration: none;
+}
+.add-comment a:hover {
+  color: #f17d00;
+}
+.comments-wrapper {
+  padding-left: 3em;
+}
+.btn-remove {
+  background-color: rgba(242, 17, 54, 0.12) !important;
+  color: #e63c3c !important;
+  border-radius: 1em;
+  padding: 0.05em 0.42em;
+  font-size: 10px;
+}
+.btn-remove:hover {
+  cursor: pointer;
+}
+
+a.have-account {
+  color: #929292;
+  font-size: 15px;
+  margin-bottom: 0;
+  text-decoration: none;
+}
+a.have-account:hover {
+  color: #f17d00;
+}
