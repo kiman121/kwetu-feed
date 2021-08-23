@@ -11,7 +11,7 @@ class ProdConfig(Config):
     # DATABASE = ""
     # POSTGRES_USER = ""
     # POSTGRES_PASSWORD = ""
-    SQLALCHEMY_DATABASE_URI= os.environ.get("")
+    SQLALCHEMY_DATABASE_URI= os.environ.get("SQL_URL")
 
 class StagConfig(Config):
     DATABASE = ""
