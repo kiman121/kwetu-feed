@@ -20,5 +20,12 @@ def datetimeformat(value, format):
     return value.strftime(format)
 app.jinja_env.filters['datetimeformat'] = datetimeformat
 
+@manager.shell
+def make_shell_context():
+    '''
+    Function that allows us to pass properties into the shell context.
+    '''
+    return dict(app=app, db=db, User=User, Category=Category)
+
 if __name__ == '__main__':
     manager.run()
