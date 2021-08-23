@@ -1,0 +1,34 @@
+<div
+  class="modal fade"
+  id="add_comment"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">New comment</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form action="{{url_for('main.add_comment')}}" method="POST">
+          {% set add_comment = context['add_comment'] %}
+          {{add_comment.hidden_tag()}}
+        
+          <div class="form-group mb-2">
+            {{add_comment.comment(rows="10",cols="100",placeholder="Your comment...",class_="form-control")}}
+          </div>
+          <input class="selected-post-comment" type="hidden" name="post_id" value="" />
+          <input type="hidden" name="endpoint" value="{{request.endpoint}}" />
+          <div class="div">{{add_comment.submit(class_="btn-submit")}}</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
