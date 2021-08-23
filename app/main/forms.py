@@ -57,10 +57,11 @@ class EditPostForm(FlaskForm):
     submit = SubmitField('Edit Post')
 
 
-# class UpdateProfile(FlaskForm):
-#     '''
-#     Class to create an update profile form
-#     '''
-#     first_name = StringField("First name", validators=[Required()])
-#     other_names = StringField("Other names", validators=[Required()])
-#     submit = SubmitField('Submit')
+class EditProfileForm(FlaskForm):
+    '''
+    Class to create an update profile form
+    '''
+    first_name = StringField("First name", validators=[Required()])
+    other_names = StringField("Other names", validators=[Required()])
+    bio = TextAreaField('Your post',  validators=[Required()])
+    submit = SubmitField('Submit')

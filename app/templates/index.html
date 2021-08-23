@@ -1,15 +1,22 @@
-{% extends 'base.html' %} {% block content %} {% include
-'modals/new_post.html'%} {% include 'modals/delete_post.html'%} {% include
-'modals/edit_post.html'%}
+{% extends 'base.html' %} {% block content %} 
+
 <main class="container main">
-  {% set random_quote = context['random_quote']%} {% set featured_post =
-  context['featured_post']%} {% set posts = context['posts']%}
+  {% set random_quote = context['random_quote']%} 
+  {% set featured_post = context['featured_post']%} 
+  {% set posts = context['posts']%}
+  {% set comments = context['post_comments']%}
+  {% set post_comment_count = context['post_comment_count']%}
+  {% if current_user.is_authenticated%}
+    {% set user_status = 'authenticated'%}
+  {%else%}
+    {% set user_status = 'not authenticated'%}
+  {%endif%}
   <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
     <div class="col-md-6 px-0">
       <h1 class="display-4 fst-italic">{{featured_post.title}}</h1>
       <p class="blog-post-meta">
         {{ featured_post.created_at|datetimeformat('long') }} by
-        <a href="#"
+        <a data-userstatus="user_status" class="view-user-profile" href="{{url_for('main.profile', uid=featured_post.user_id)}}"
           >{{featured_post.user.first_name}}
           {{featured_post.user.other_names}}</a
         >
@@ -20,121 +27,32 @@
       </p>
     </div>
   </div>
-
-  <div class="row mb-2">
-    <div class="col-md-6">
-      <div
-        class="
-          row
-          g-0
-          border
-          rounded
-          overflow-hidden
-          flex-md-row
-          mb-4
-          shadow-sm
-          h-md-250
-          position-relative
-        "
-      >
-        <div class="col p-4 d-flex flex-column position-static">
-          <strong class="d-inline-block mb-2 text-primary">World</strong>
-          <h3 class="mb-0">Featured post</h3>
-          <div class="mb-1 text-muted">Nov 12</div>
-          <p class="card-text mb-auto">
-            This is a wider card with supporting text below as a natural lead-in
-            to additional content.
-          </p>
-          <a href="#" class="stretched-link">Continue reading</a>
-        </div>
-        <div class="col-auto d-none d-lg-block">
-          <svg
-            class="bd-placeholder-img"
-            width="200"
-            height="250"
-            xmlns="http://www.w3.org/2000/svg"
-            role="img"
-            aria-label="Placeholder: Thumbnail"
-            preserveAspectRatio="xMidYMid slice"
-            focusable="false"
-          >
-            <title>Placeholder</title>
-            <rect width="100%" height="100%" fill="#55595c" />
-            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-          </svg>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div
-        class="
-          row
-          g-0
-          border
-          rounded
-          overflow-hidden
-          flex-md-row
-          mb-4
-          shadow-sm
-          h-md-250
-          position-relative
-        "
-      >
-        <div class="col p-4 d-flex flex-column position-static">
-          <strong class="d-inline-block mb-2 text-success">Design</strong>
-          <h3 class="mb-0">Post title</h3>
-          <div class="mb-1 text-muted">Nov 11</div>
-          <p class="mb-auto">
-            This is a wider card with supporting text below as a natural lead-in
-            to additional content.
-          </p>
-          <a href="#" class="stretched-link">Continue reading</a>
-        </div>
-        <div class="col-auto d-none d-lg-block">
-          <svg
-            class="bd-placeholder-img"
-            width="200"
-            height="250"
-            xmlns="http://www.w3.org/2000/svg"
-            role="img"
-            aria-label="Placeholder: Thumbnail"
-            preserveAspectRatio="xMidYMid slice"
-            focusable="false"
-          >
-            <title>Placeholder</title>
-            <rect width="100%" height="100%" fill="#55595c" />
-            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-          </svg>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <div class="row g-5">
     <div class="col-md-8">
       <h3 class="pb-4 mb-4 fst-italic border-bottom">Other Featured posts</h3>
-      <article class="blog-post">
-        {% for post in posts%}
-        <strong class="d-inline-block mb-2 text-primary">{{post.category.category_name}}</strong>
+      {% for post in posts%}
+      {%if post.id != featured_post.id%}
+      <article data-postid="{{post.id}}" class="blog-post">
+        <strong class="d-inline-block mb-2 text-primary"
+          >{{post.category.category_name}}</strong
+        >
         <input class="category-id" type="hidden" value="{{post.category_id}}" />
         <input class="post-title" type="hidden" value="{{post.title}}" />
         <input class="post-detail" type="hidden" value="{{post.post}}" />
         <h2 class="blog-post-title">{{post.title}}</h2>
         <p class="blog-post-meta">
+          {% if current_user.id == post.user_id and current_user.is_authenticated %}
           <span
-            ><a data-postid="{{post.id}}" class="icon-edit edit-post" href="#"
+            ><a class="icon-edit edit-post" href="#"
               ><i class="fa fa-pencil"></i></a
           ></span>
           <span
-            ><a
-              data-postid="{{post.id}}"
-              class="icon-delete delete-post"
-              href="#"
+            ><a class="icon-delete delete-post" href="#"
               ><i class="fa fa-trash"></i></a
           ></span>
-
+          {%endif%}
           {{post.created_at|datetimeformat('long')}} by
-          <a href="#">{{post.user.first_name}} {{post.user.other_names}}</a>
+          <a data-userstatus="user_status" class="view-user-profile" href="{{url_for('main.profile', uid=post.user_id)}}">{{post.user.first_name}} {{post.user.other_names}}</a>
         </p>
 
         <p>
@@ -144,20 +62,43 @@
         </p>
         <p class="lead mb-0"></p>
         <hr />
-        <p class="add-comment"><a href="#">add comment</a></p>
+        <!-- Display comment count if any -->
+        {%for comment_count in post_comment_count%}
+        {%if comment_count.post_id == post.id and comment_count.num_comments > 0%}
+        {%if comment_count.num_comments > 1%}
+        <p class="">{{comment_count.num_comments}} Comments</p>
+        {%else%}
+        <p class="">{{comment_count.num_comments}} Comment</p>
+        {%endif%}
+        {%endif%}
         {%endfor%}
+        <!-- Display comments if any -->
+        {% for comment in comments%}
+        {% if comment.post_id == post.id %}
+        <div data-commentid="{{comment.id}}" class="comments-wrapper">
+          <p>{{comment.comments}} - <a data-userstatus="user_status" class="view-user-profile" href="{{url_for('main.profile', uid=comment.user_id)}}">{{comment.user.first_name}}</a> 
+            {{comment.created_at|datetimeformat('long')}}.
+            {% if current_user.id == post.user_id and current_user.is_authenticated %}   
+            <span class="btn-remove delete-comment">Delete</span>
+            {%endif%}
+          </p>
+          <hr>
+        </div>
+        {%endif%}
+        {%endfor%}
+        {% if user == current_user.user and current_user.is_authenticated %}
+        <div data-userstatus="authenticated" class="add-comment">
+            <a href="#">add comment</a>
+        </div>
+        {%else%}
+        <div data-userstatus="not authenticated" class="add-comment">
+            <a href="#">add comment</a>
+        </div>
+        {%endif%}
       </article>
-      <nav class="blog-pagination" aria-label="Pagination">
-        <a class="btn btn-outline-primary" href="#">Older</a>
-        <a
-          class="btn btn-outline-secondary disabled"
-          href="#"
-          tabindex="-1"
-          aria-disabled="true"
-          >Newer</a
-        >
-      </nav>
-    </div>
+      {%endif%}
+      {%endfor%}
+     </div>
 
     <div class="col-md-4">
       <div class="position-sticky" style="top: 2rem">
@@ -168,43 +109,18 @@
           </p>
           <p class="mb-0">{{random_quote.quote}}</p>
         </div>
-
-        <div class="p-4">
-          <h4 class="fst-italic">Archives</h4>
-          <ol class="list-unstyled mb-0">
-            <li><a href="#">March 2021</a></li>
-            <li><a href="#">February 2021</a></li>
-            <li><a href="#">January 2021</a></li>
-            <li><a href="#">December 2020</a></li>
-            <li><a href="#">November 2020</a></li>
-            <li><a href="#">October 2020</a></li>
-            <li><a href="#">September 2020</a></li>
-            <li><a href="#">August 2020</a></li>
-            <li><a href="#">July 2020</a></li>
-            <li><a href="#">June 2020</a></li>
-            <li><a href="#">May 2020</a></li>
-            <li><a href="#">April 2020</a></li>
-          </ol>
-        </div>
-
-        <div class="p-4">
-          <h4 class="fst-italic">Elsewhere</h4>
-          <ol class="list-unstyled">
-            <li><a href="#">GitHub</a></li>
-            <li><a href="#">Twitter</a></li>
-            <li><a href="#">Facebook</a></li>
-          </ol>
-        </div>
       </div>
     </div>
   </div>
 </main>
+{% include 'modals/new_post.html'%} 
+{% include 'modals/delete_post.html'%} 
+{% include 'modals/edit_post.html'%} 
+{% include 'modals/add_comment.html'%}
+{% include 'modals/user_prompt.html'%}
+{% include 'modals/delete_comment.html'%}
 
 <footer class="blog-footer">
-  <p>
-    Blog template built for <a href="https://getbootstrap.com/">Bootstrap</a> by
-    <a href="https://twitter.com/mdo">@mdo</a>.
-  </p>
   <p>
     <a href="#">Back to top</a>
   </p>

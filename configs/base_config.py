@@ -8,10 +8,10 @@ class Config:
     UPLOADED_PHOTOS_DEST = 'app/static/photos/users'
 
 class ProdConfig(Config):
-    DATABASE = ""
-    POSTGRES_USER = ""
-    POSTGRES_PASSWORD = ""
-    SQLALCHEMY_DATABASE_URI= ""
+    # DATABASE = ""
+    # POSTGRES_USER = ""
+    # POSTGRES_PASSWORD = ""
+    SQLALCHEMY_DATABASE_URI= os.environ.get("")
 
 class StagConfig(Config):
     DATABASE = ""

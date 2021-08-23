@@ -52,4 +52,29 @@ $(document).ready(function () {
             $(".selected-comment-delete").val(commentId)
             $("#delete_comment").modal("show"); 
     });
+
+    $(document).on("click", ".edit-profile", function(e){
+        e.preventDefault()
+
+        var fname = $(this).parents(".profile-box").find(".fname").val(),
+            onames = $(this).parents(".profile-box").find(".onames").val(),
+            bio = $(this).parents(".profile-box").find(".bio").val();
+        
+        $("form.form-edit-profile #first_name").val(fname);
+        $("form.form-edit-profile #other_names").val(onames);
+        console.log(bio)
+        if (bio !== "None"){
+            $("form.form-edit-profile #bio").val(bio);
+        }
+        
+        $("#edit_profile").modal("show"); 
+    });
+
+    $(document).on("click", ".view-user-profile", function(e){
+        e.preventDefault()
+        var userAuthStatus = $(this).data('userstatus');
+        if (userAuthStatus === "not authenticated"){
+            $("#user_prompt").modal("show");
+        }
+    });
 });

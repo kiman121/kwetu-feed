@@ -1,0 +1,58 @@
+{% extends 'base.html' %} {% block content %} {% set user_details =
+context['user_details'] %}
+<div class="profile-wrapper">
+  <div class="profile-box">
+    <div class="row">
+      <div class="col-md-4">
+        <img
+          src="{{url_for('static', filename=user_details.profile_pic_path)}}"
+          alt="profile photo"
+        />
+      </div>
+      <input type="hidden" class="fname" value="{{user_details.first_name}}" />
+      <input
+        type="hidden"
+        class="onames"
+        value="{{user_details.other_names}}"
+      />
+      <input type="hidden" class="bio" value="{{user_details.bio}}" />
+      <div class="col-md-8">
+        <ul>
+          <li class="">
+            <p>
+              <span class="detail">First Name:</span>{{user_details.first_name}}
+            </p>
+          </li>
+          <li class="detail">
+            <p><span>Other Names:</span>{{user_details.other_names}}</p>
+          </li>
+          <li class="detail">
+            {% if user_details.bio%}
+            <p><span>Bio:</span>{{user_details.bio}}</p>
+            {%else%}
+            <p><span>Bio:</span>No bio</p>
+            {%endif%}
+          </li>
+        </ul>
+      </div>
+    </div>
+    {% if user_details.id == current_user.id and current_user.is_authenticated %}
+    <div class="pro-edit">
+      <a
+        data-target="#update_user_profile"
+        data-toggle="modal"
+        class="icon-edit edit-profile"
+        href="#"
+        ><i class="fa fa-pencil"></i
+      ></a>
+    </div>
+    {%endif%}
+  </div>
+</div>
+{% include 'modals/edit_profile.html'%}
+<footer class="blog-footer">
+  <p>
+    <a href="#">Back to top</a>
+  </p>
+</footer>
+{%endblock%}

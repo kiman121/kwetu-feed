@@ -34,7 +34,7 @@
   text-decoration: none;
 }
 .btn-block .btn-submit:hover {
-    color:#fff;
+  color: #fff;
 }
 .text-primary {
   color: #0096c7;
@@ -146,10 +146,6 @@
 .signup-box h4 {
   font-weight: 900;
 }
-/* .modal #add_new_post{
-    width: 800px !important;
-} */
-
 /*-----------------
     Login & Register
  -----------------------*/
@@ -178,7 +174,9 @@
 .btn-remove:hover {
   cursor: pointer;
 }
-
+/*-----------------
+    User prompt
+ -----------------------*/
 a.have-account {
   color: #929292;
   font-size: 15px;
@@ -187,4 +185,36 @@ a.have-account {
 }
 a.have-account:hover {
   color: #f17d00;
+}
+/*-----------------
+    Profile
+ -----------------------*/
+.profile-wrapper {
+  padding: 9em 0;
+}
+.profile-box {
+  position: relative;
+  margin: 0 auto;
+  width: 60%;
+  text-align: left;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  padding: 1em;
+  border-radius: 6px;
+}
+.profile-box img {
+  width: 100%;
+}
+.profile-box ul {
+  list-style-type: none;
+  /* line-height: 0.45; */
+  padding: 0;
+}
+.profile-box .pro-edit {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 0.1em;
+}
+.profile-box .icon-edit{
+    background: #C9CCD5;
 }

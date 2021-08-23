@@ -61,7 +61,7 @@
             <a class="link-secondary" href="#">Subscribe</a>
           </div>
           <div class="col-4 text-center">
-            <a class="blog-header-logo text-dark" href="{{url_for('main.home')}}">ZetuFeed</a>
+            <a class="blog-header-logo text-white decoration-none" href="{{url_for('main.home')}}">ZetuFeed</a>
           </div>
           <div class="col-4 d-flex justify-content-end align-items-center">
             <a class="link-secondary" href="#" aria-label="Search">
@@ -83,8 +83,11 @@
                 <path d="M21 21l-5.2-5.2" />
               </svg>
             </a>
+
+
             {% if user == current_user.user and current_user.is_authenticated %}
               {{current_user.first_name}}
+              <a class="btn btn-sm btn-outline-secondary" href="{{url_for('main.profile', uid=current_user.id)}}">Profile</a>
               <a class="btn btn-sm btn-outline-secondary" href="{{url_for('auth.logout')}}">Log out</a>
               <a class="btn btn-sm btn-outline-secondary add-new-post" href="#">Add post</a>
             {%else%}

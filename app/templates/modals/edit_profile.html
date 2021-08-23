@@ -1,0 +1,34 @@
+<div
+  class="modal custom-modal fade"
+  id="edit_profile"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="form-header">
+            <h3>Edit Profile</h3>
+        </div>
+        <form action="{{url_for('main.edit_profile')}}" method="POST" class="form-edit-profile" enctype="multipart/form-data">
+            {% set edit_profile_form = context['edit_profile_form'] %}
+            {{edit_profile_form.hidden_tag()}}
+            <div class="form-group mb-2">
+              {{edit_profile_form.first_name(size=30, placeholder="First names", class_="form-control")}}
+            </div>
+            <div class="form-group mb-2">
+              {{edit_profile_form.other_names(size=30, placeholder="Other names", class_="form-control")}}
+            </div>
+            <div class="form-group mb-2">
+              <input type="file" name="photo" class="form-control" required>
+            </div>
+            <div class="form-group mb-2">
+              {{edit_profile_form.bio(rows="10",cols="100",placeholder="Tell us about yourself",class_="form-control")}}
+            </div>
+            <div class="div">{{edit_profile_form.submit(class_="btn-submit")}}</div>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>

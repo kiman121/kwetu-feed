@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from . import main
 from ..import db, photos
 from ..request import get_quote, post_comment_count
-from .forms import PostForm, AddCommentForm, DeletePostForm, EditPostForm, DeleteCommentForm
+from .forms import PostForm, AddCommentForm, DeletePostForm, EditPostForm, DeleteCommentForm, EditProfileForm
 from models.category import Category
 from models.comment import Comment
 from models.post import Post
@@ -144,15 +144,41 @@ def delete_comment():
 
     return redirect(url_for('.home'))
 
-@main.route('/profile', methods=['GET', 'POST'])
+@main.route('/profile/<int:uid>', methods=['GET', 'POST'])
 @login_required
-def profile():
+def profile(uid):
     '''
     View function that renders a user profile
     '''
     data = {
-        "title": "ZetuFeed - home",
-        "categories": Category.get_categories()
+        "title": "ZetuFeed - profile",
+        "categories": Category.get_categories(),
+        "user_details": User.get_user_by_id(uid),
+        "edit_profile_form": EditProfileForm()
     }
-    
     return render_template('profile.html', context = data)
+
+@main.route('/profile/edit', methods=['Get', 'POST'])
+@login_required
+def edit_profile():
+    '''
+    View function that handles edit post request
+    '''
+    form = EditProfileForm()
+    user = User.query.filter_by(id=current_user.get_id()).first()
+
+    if form.validate_on_submit():
+        user.first_name = form.first_name.data
+        user.other_names = form.other_names.data
+        user.bio = form.bio.data
+        user.updated_at = datetime.utcnow()
+
+        if 'photo' in request.files:
+            filename = photos.save(request.files['photo'])
+            path = f'photos/users/{filename}'
+            user.profile_pic_path = path
+
+        db.session.add(user)
+        db.session.commit()
+
+    return redirect('.profile')

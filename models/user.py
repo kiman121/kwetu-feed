@@ -22,10 +22,20 @@ class User(UserMixin, db.Model):
     other_names = db.Column(db.String(255), nullable=False)
     username = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), unique=True, index=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow)
+    bio = db.Column(db.Text())
     profile_pic_path = db.Column(db.String(255))
     password_hash = db.Column(db.String(255))
     posts = db.relationship('Post', backref='user', lazy='dynamic')
     comments = db.relationship('Comment', backref='user', lazy='dynamic')
+    
+    def get_user_by_id(uid):
+        '''
+        Method to get a user based on the id
+        '''
+        user = User.query.filter_by(id=uid).first()
+        return user
 
     @property
     def password(self):
