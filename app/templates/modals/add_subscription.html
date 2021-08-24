@@ -1,0 +1,30 @@
+<div
+  class="modal custom-modal fade"
+  id="add_subscription"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="form-header">
+            <h3>ZetuFeed Subscription</h3>
+        </div>
+        <form action="{{url_for('main.subscribe')}}" method="POST">
+          {% set add_subscription = context['add_subscription'] %}
+          {{add_subscription.hidden_tag()}}
+          <div class="form-group mb-2">
+            {{add_subscription.first_name(placeholder="First name", size=30,
+            class_="form-control")}}
+          </div>
+          <div class="form-group mb-2">
+            {{add_subscription.email(placeholder="Email address", size=30,
+            class_="form-control")}}
+          </div>
+          <div class="div">{{add_subscription.submit(class_="btn-submit")}}</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
