@@ -16,7 +16,7 @@ Here is a working live demo : https://zetufeed.herokuapp.com/
     ```
 - Open the project on VS Code or any editor of choice.
 - Navigate to the projects root directory.
-- Open the virtual environment by running the "source virtual/bin/activate" command.
+- Open the virtual environment by running the `source virtual/bin/activate` command.
 - Install the required packages: `pip install -r requirements.txt`
 - Create a .env file and add the following data instances
     ```

@@ -49,6 +49,8 @@ def register():
 
         return redirect(url_for('auth.login'))
     
+        # flash('There is an account with set username or email')
+    
     data = {
         "title": "ZetuFeed - new account",
         "registration_form":form,
