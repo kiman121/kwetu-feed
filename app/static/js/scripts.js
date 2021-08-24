@@ -73,8 +73,15 @@ $(document).ready(function () {
     $(document).on("click", ".view-user-profile", function(e){
         e.preventDefault()
         var userAuthStatus = $(this).data('userstatus');
-        if (userAuthStatus === "not authenticated"){
+        console.log(userAuthStatus)
+        if (userAuthStatus === "authenticate"){
             $("#user_prompt").modal("show");
         }
+    });
+
+    $(document).on("click", ".new-subscription", function(e){
+        e.preventDefault()
+
+        $("#add_subscription").modal("show");
     });
 });

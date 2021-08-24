@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, BooleanField, SubmitField, TextAreaField, validators, IntegerField
-from wtforms.validators import Required, InputRequired
+from wtforms.validators import Required, InputRequired, Email
 from wtforms_sqlalchemy.fields import QuerySelectField
 from models.user import User
 from models.category import Category 
@@ -65,3 +65,11 @@ class EditProfileForm(FlaskForm):
     other_names = StringField("Other names", validators=[Required()])
     bio = TextAreaField('Your post',  validators=[Required()])
     submit = SubmitField('Submit')
+
+class SubscriptionForm(FlaskForm):
+    '''
+    Class to create an subscription form
+    '''
+    first_name = StringField("First name", validators=[Required()])
+    email = StringField("Your Email Address", validators=[Required(), Email()])
+    submit = SubmitField('Subscribe')

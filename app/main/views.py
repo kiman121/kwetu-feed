@@ -3,13 +3,15 @@ from flask_login import login_required, current_user
 from . import main
 from ..import db, photos
 from ..request import get_quote, post_comment_count
-from .forms import PostForm, AddCommentForm, DeletePostForm, EditPostForm, DeleteCommentForm, EditProfileForm
+from .forms import PostForm, AddCommentForm, DeletePostForm, EditPostForm, DeleteCommentForm, EditProfileForm, SubscriptionForm
 from models.category import Category
 from models.comment import Comment
 from models.post import Post
 from models.user import User
+from models.subscription import Subscription
 from datetime import datetime
 from sqlalchemy import func
+from ..email import mail_message
 
 
 @main.route('/')
@@ -29,7 +31,8 @@ def home():
         "add_comment": AddCommentForm(),
         "post_comments": Comment.get_comments(),
         "post_comment_count": post_comment_count(),
-        "delete_comment_post": DeleteCommentForm()
+        "delete_comment_post": DeleteCommentForm(),
+        "add_subscription": SubscriptionForm()
     }
 
     return render_template('index.html', context=data)
@@ -58,6 +61,11 @@ def new_post():
 
         db.session.add(new_post)
         db.session.commit()
+        
+        subscribers = Subscription.get_subscribers()
+        for subscriber in subscribers:
+            mail_message("ZetuFeed - new post",
+                     "email/new_post", subscriber.email, subscriber=subscriber, post=new_post)
 
     return redirect(redirect_to)
 
@@ -166,6 +174,8 @@ def edit_profile():
     '''
     form = EditProfileForm()
     user = User.query.filter_by(id=current_user.get_id()).first()
+    
+    
 
     if form.validate_on_submit():
         user.first_name = form.first_name.data
@@ -181,4 +191,20 @@ def edit_profile():
         db.session.add(user)
         db.session.commit()
 
-    return redirect('.profile')
+    return redirect(url_for('.profile', uid=current_user.get_id()))
+
+@main.route('/subscription', methods=['GET','POST'])
+def subscribe():
+    '''
+    View function that handles a subscription
+    '''
+    form = SubscriptionForm()
+    if form.validate_on_submit():
+        subscriber = Subscription(first_name=form.first_name.data, email=form.email.data)
+        db.session.add(subscriber)
+        db.session.commit()
+
+        mail_message("Welcome to ZetuFeed",
+                     "email/welcome_subscriber", subscriber.email, subscriber=subscriber)
+
+        return redirect(url_for('.home'))

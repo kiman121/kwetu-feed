@@ -6,17 +6,20 @@
   {% set posts = context['posts']%}
   {% set comments = context['post_comments']%}
   {% set post_comment_count = context['post_comment_count']%}
+
   {% if current_user.is_authenticated%}
     {% set user_status = 'authenticated'%}
   {%else%}
+  {% set validate_user = "data-userstatus=authenticate class=view-user-profile"%}
     {% set user_status = 'not authenticated'%}
+    
   {%endif%}
   <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
     <div class="col-md-6 px-0">
       <h1 class="display-4 fst-italic">{{featured_post.title}}</h1>
       <p class="blog-post-meta">
         {{ featured_post.created_at|datetimeformat('long') }} by
-        <a data-userstatus="user_status" class="view-user-profile" href="{{url_for('main.profile', uid=featured_post.user_id)}}"
+        <a {{validate_user}} href="{{url_for('main.profile', uid=featured_post.user_id)}}"
           >{{featured_post.user.first_name}}
           {{featured_post.user.other_names}}</a
         >
@@ -52,7 +55,7 @@
           ></span>
           {%endif%}
           {{post.created_at|datetimeformat('long')}} by
-          <a data-userstatus="user_status" class="view-user-profile" href="{{url_for('main.profile', uid=post.user_id)}}">{{post.user.first_name}} {{post.user.other_names}}</a>
+          <a {{validate_user}} href="{{url_for('main.profile', uid=post.user_id)}}">{{post.user.first_name}} {{post.user.other_names}}</a>
         </p>
 
         <p>
@@ -76,7 +79,7 @@
         {% for comment in comments%}
         {% if comment.post_id == post.id %}
         <div data-commentid="{{comment.id}}" class="comments-wrapper">
-          <p>{{comment.comments}} - <a data-userstatus="user_status" class="view-user-profile" href="{{url_for('main.profile', uid=comment.user_id)}}">{{comment.user.first_name}}</a> 
+          <p>{{comment.comments}} - <a {{validate_user}} href="{{url_for('main.profile', uid=comment.user_id)}}">{{comment.user.first_name}}</a> 
             {{comment.created_at|datetimeformat('long')}}.
             {% if current_user.id == post.user_id and current_user.is_authenticated %}   
             <span class="btn-remove delete-comment">Delete</span>
@@ -119,6 +122,7 @@
 {% include 'modals/add_comment.html'%}
 {% include 'modals/user_prompt.html'%}
 {% include 'modals/delete_comment.html'%}
+{% include 'modals/add_subscription.html'%}
 
 <footer class="blog-footer">
   <p>
