@@ -7,11 +7,11 @@ from models.category import Category
 
 
 # Creating app instance
-app = create_app(('production'))
+app = create_app(('development'))
 
-@app.before_first_request
-def create_tables():
-    db.create_all()
+# @app.before_first_request
+# def create_tables():
+#     db.create_all()
 
 manager = Manager(app)
 migrate = Migrate(app, db)
@@ -23,6 +23,15 @@ def datetimeformat(value, format):
         format='%b %Y'
     return value.strftime(format)
 app.jinja_env.filters['datetimeformat'] = datetimeformat
+
+@manager.command
+def test():
+    '''
+    Run the unit tests.
+    '''
+    import unittest
+    tests = unittest.TestLoader().discover('tests')
+    unittest.TextTestRunner(verbosity=2).run(tests)
 
 @manager.shell
 def make_shell_context():
