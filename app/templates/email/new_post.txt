@@ -1,0 +1,6 @@
+Hey {{subscriber.first_name}},
+
+Check out a new post: {{post.title}}
+
+Stay awesome,
+ZetuFeed team

@@ -1,0 +1,6 @@
+Hey {{subscriber.first_name}},
+
+We at ZetuFeed are thrilled for your subscription. By joining, we will notify you as and when a new post is made.
+
+Stay awesome,
+ZetuFeed team

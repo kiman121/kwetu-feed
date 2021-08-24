@@ -1,0 +1,6 @@
+Hey {{user.first_name}},
+
+Karibu sana to ZetuFeed. Here your views matter and count. As a team we endeavor in providing you with the best experience as you express yourself to the world.
+
+Stay awesome,
+ZetuFeed team
