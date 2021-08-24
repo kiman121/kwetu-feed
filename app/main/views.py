@@ -174,8 +174,6 @@ def edit_profile():
     '''
     form = EditProfileForm()
     user = User.query.filter_by(id=current_user.get_id()).first()
-    
-    
 
     if form.validate_on_submit():
         user.first_name = form.first_name.data
