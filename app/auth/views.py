@@ -5,6 +5,7 @@ from models.user import User
 from models.category import Category
 from .forms import LoginForm, RegistrationForm
 from .. import db
+from ..email import mail_message
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -42,6 +43,9 @@ def register():
                     username=form.username.data, password=form.password.data, profile_pic_path="photos/users/default_user_pic.png")
         db.session.add(user)
         db.session.commit()
+
+        mail_message("Welcome to ZetuFeed",
+                     "email/welcome_user", user.email, user=user)
 
         return redirect(url_for('auth.login'))
     
