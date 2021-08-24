@@ -7,7 +7,7 @@ from models.category import Category
 
 
 # Creating app instance
-app = create_app(('development'))
+app = create_app(('production'))
 
 # @app.before_first_request
 # def create_tables():
