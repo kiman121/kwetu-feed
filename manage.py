@@ -9,9 +9,9 @@ from models.category import Category
 # Creating app instance
 app = create_app(('production'))
 
-# @app.before_first_request
-# def create_tables():
-#     db.create_all()
+@app.before_first_request
+def create_tables():
+    db.create_all()
 
 manager = Manager(app)
 migrate = Migrate(app, db)
