@@ -16,7 +16,10 @@
           {% set delete_form = context['delete_form'] %}
           {{delete_form.hidden_tag()}}
           <input class="selected-post-delete" type="hidden" name="post_id" value="" />
-          
+          <input type="hidden" name="endpoint" value="{{request.endpoint}}" />
+          {%if request.endpoint == 'main.home' %}
+          <input type="hidden" name="active_tab" value="{{active_tab}}" />
+          {%endif%}
           <div class="modal-btn">
               <div class="row">
                 <div class="col-md-6">

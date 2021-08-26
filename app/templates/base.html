@@ -97,12 +97,21 @@
           </div>
         </div>
       </header>
-
-      <div class="nav-scroller py-1 mb-2">
+      {% set active_tab = context['active_tab']%}
+      
+      <div data-activetab="{{active_tab}}" class="nav-scroller py-1 mb-2">
         <nav class="nav d-flex justify-content-between">
-          
+          {% if active_tab == 0 %}
+            <a data-tabid="0" class="p-2 link-secondary active" href="{{url_for('main.home')}}">All posts</a>
+          {%else%}
+            <a data-tabid="0" class="p-2 link-secondary" href="{{url_for('main.home')}}">All posts</a>
+          {%endif%}
           {%for category in categories%}
-            <a class="p-2 link-secondary" href="#">{{category.category_name}}</a>
+            {%if active_tab == category.id%}
+              <a data-tabid="{{category.id}}" class="p-2 link-secondary active" href="{{url_for('main.home', catid=category.id)}}">{{category.category_name}}</a>
+            {% else %}
+              <a data-tabid="{{category.id}}" class="p-2 link-secondary" href="{{url_for('main.home', catid=category.id)}}">{{category.category_name}}</a>
+            {% endif%}
           {%endfor%}
         </nav>
       </div>

@@ -26,6 +26,9 @@
           </div>
           <input class="selected-post-comment" type="hidden" name="post_id" value="" />
           <input type="hidden" name="endpoint" value="{{request.endpoint}}" />
+          {%if request.endpoint == 'main.home' %}
+          <input type="hidden" name="active_tab" value="{{active_tab}}" />
+          {%endif%}
           <div class="div">{{add_comment.submit(class_="btn-submit")}}</div>
         </form>
       </div>

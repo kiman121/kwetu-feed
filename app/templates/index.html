@@ -6,6 +6,7 @@
   {% set posts = context['posts']%}
   {% set comments = context['post_comments']%}
   {% set post_comment_count = context['post_comment_count']%}
+  {% set selected_category_name = context['selected_category_name']%}
 
   {% if current_user.is_authenticated%}
     {% set user_status = 'authenticated'%}
@@ -14,107 +15,143 @@
     {% set user_status = 'not authenticated'%}
     
   {%endif%}
-  <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
-    <div class="col-md-6 px-0">
-      <h1 class="display-4 fst-italic">{{featured_post.title}}</h1>
-      <p class="blog-post-meta">
-        {{ featured_post.created_at|datetimeformat('long') }} by
-        <a {{validate_user}} href="{{url_for('main.profile', uid=featured_post.user_id)}}"
-          >{{featured_post.user.first_name}}
-          {{featured_post.user.other_names}}</a
-        >
-      </p>
-      <p class="lead my-3">{{featured_post.post|truncate(100)}}</p>
-      <p class="lead mb-0">
-        <a href="#" class="text-white fw-bold">Continue reading...</a>
-      </p>
+  {% if not featured_post%}
+    <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
+      <div class="col-md-6 px-0">
+        <h1 class="display-4 fst-italic">There are no {{selected_category_name.category_name|lower}} posts.</h1>
+      </div>
     </div>
-  </div>
-  <div class="row g-5">
-    <div class="col-md-8">
-      <h3 class="pb-4 mb-4 fst-italic border-bottom">Other Featured posts</h3>
-      {% for post in posts%}
-      {%if post.id != featured_post.id%}
-      <article data-postid="{{post.id}}" class="blog-post">
-        <strong class="d-inline-block mb-2 text-primary"
-          >{{post.category.category_name}}</strong
-        >
-        <input class="category-id" type="hidden" value="{{post.category_id}}" />
-        <input class="post-title" type="hidden" value="{{post.title}}" />
-        <input class="post-detail" type="hidden" value="{{post.post}}" />
-        <h2 class="blog-post-title">{{post.title}}</h2>
-        <p class="blog-post-meta">
-          {% if current_user.id == post.user_id and current_user.is_authenticated %}
-          <span
-            ><a class="icon-edit edit-post" href="#"
-              ><i class="fa fa-pencil"></i></a
-          ></span>
-          <span
-            ><a class="icon-delete delete-post" href="#"
-              ><i class="fa fa-trash"></i></a
-          ></span>
-          {%endif%}
-          {{post.created_at|datetimeformat('long')}} by
-          <a {{validate_user}} href="{{url_for('main.profile', uid=post.user_id)}}">{{post.user.first_name}} {{post.user.other_names}}</a>
-        </p>
-
-        <p>
-          {{featured_post.post|truncate(200)}}<span class="st-icon-pandora"
-            ><a href="#" class="fw-bold">Continue reading...</a></span
-          >
-        </p>
-        <p class="lead mb-0"></p>
-        <hr />
-        <!-- Display comment count if any -->
-        {%for comment_count in post_comment_count%}
-        {%if comment_count.post_id == post.id and comment_count.num_comments > 0%}
-        {%if comment_count.num_comments > 1%}
-        <p class="">{{comment_count.num_comments}} Comments</p>
-        {%else%}
-        <p class="">{{comment_count.num_comments}} Comment</p>
-        {%endif%}
-        {%endif%}
-        {%endfor%}
-        <!-- Display comments if any -->
-        {% for comment in comments%}
-        {% if comment.post_id == post.id %}
-        <div data-commentid="{{comment.id}}" class="comments-wrapper">
-          <p>{{comment.comments}} - <a {{validate_user}} href="{{url_for('main.profile', uid=comment.user_id)}}">{{comment.user.first_name}}</a> 
-            {{comment.created_at|datetimeformat('long')}}.
-            {% if current_user.id == post.user_id and current_user.is_authenticated %}   
-            <span class="btn-remove delete-comment">Delete</span>
-            {%endif%}
-          </p>
-          <hr>
-        </div>
-        {%endif%}
-        {%endfor%}
-        {% if user == current_user.user and current_user.is_authenticated %}
-        <div data-userstatus="authenticated" class="add-comment">
-            <a href="#">add comment</a>
-        </div>
-        {%else%}
-        <div data-userstatus="not authenticated" class="add-comment">
-            <a href="#">add comment</a>
-        </div>
-        {%endif%}
-      </article>
-      {%endif%}
-      {%endfor%}
-     </div>
-
-    <div class="col-md-4">
-      <div class="position-sticky" style="top: 2rem">
-        <div class="p-4 mb-3 bg-light rounded">
-          <h4 class="fst-italic">Random quote</h4>
-          <p class="blog-post-meta">
-            By <a href="#">{{random_quote.author}}</a>
-          </p>
-          <p class="mb-0">{{random_quote.quote}}</p>
+    <div class="row g-5">
+      <div class="col-md-8">
+      </div>
+      <div class="col-md-4">
+        <div class="position-sticky" style="top: 2rem">
+          <div class="p-4 mb-3 bg-light rounded">
+            <h4 class="fst-italic">Random quote</h4>
+            <p class="blog-post-meta">
+              By <a href="#">{{random_quote.author}}</a>
+            </p>
+            <p class="mb-0">{{random_quote.quote}}</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  {%else%}
+    <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
+      <div class="col-md-6 px-0">
+        <h1 class="display-4 fst-italic">{{featured_post.title}}</h1>
+        <p data-postid="{{featured_post.id}}" class="blog-post-meta">
+          {% if current_user.id == featured_post.user_id and current_user.is_authenticated %}
+          <input class="category-id" type="hidden" value="{{featured_post.category_id}}" />
+          <input class="post-title" type="hidden" value="{{featured_post.title}}" />
+          <input class="post-detail" type="hidden" value="{{featured_post.post}}" />
+          <span
+            ><a data-section="featured post" class="icon-edit edit-post" href="#"
+              ><i class="fa fa-pencil"></i></a
+          ></span>
+          <span
+            ><a data-section="featured post" class="icon-delete delete-post" href="#"
+              ><i class="fa fa-trash"></i></a
+          ></span>
+          {%endif%}
+          {{ featured_post.created_at|datetimeformat('long') }} by
+          <a {{validate_user}} href="{{url_for('main.profile', uid=featured_post.user_id)}}"
+            >{{featured_post.user.first_name}}
+            {{featured_post.user.other_names}}</a
+          >
+        </p>
+        <p class="lead my-3">{{featured_post.post|truncate(100)}}</p>
+        <p class="lead mb-0">
+          <a href="{{url_for('main.post', pid=featured_post.id)}}" class="text-white fw-bold">Continue reading...</a>
+        </p>
+      </div>
+    </div>
+    <div class="row g-5">
+      <div class="col-md-8">
+        {%if posts|length < 2%}
+          <h3 class="pb-4 mb-4 fst-italic border-bottom">No more {{selected_category_name.category_name|lower}} posts</h3>
+        {%else%}
+          <h3 class="pb-4 mb-4 fst-italic border-bottom">Other Featured posts</h3>
+          {% for post in posts%}
+          {%if post.id != featured_post.id%}
+          <article data-postid="{{post.id}}" class="blog-post">
+            <strong class="d-inline-block mb-2 text-primary"
+              >{{post.category.category_name}}</strong
+            >
+            <input class="category-id" type="hidden" value="{{post.category_id}}" />
+            <input class="post-title" type="hidden" value="{{post.title}}" />
+            <input class="post-detail" type="hidden" value="{{post.post}}" />
+            <h2 class="blog-post-title">{{post.title}}</h2>
+            <p class="blog-post-meta">
+              {% if current_user.id == post.user_id and current_user.is_authenticated %}
+              <span
+                ><a data-section="other posts" class="icon-edit edit-post" href="#"
+                  ><i class="fa fa-pencil"></i></a
+              ></span>
+              <span
+                ><a data-section="other posts" class="icon-delete delete-post" href="#"
+                  ><i class="fa fa-trash"></i></a
+              ></span>
+              {%endif%}
+              {{post.created_at|datetimeformat('long')}} by
+              <a {{validate_user}} href="{{url_for('main.profile', uid=post.user_id)}}">{{post.user.first_name}} {{post.user.other_names}}</a>
+            </p>
+
+            <p>{{post.post|truncate(200)}}<span class="st-icon-pandora"><a href="{{url_for('main.post', pid=post.id)}}" class="fw-bold">Continue reading...</a></span>
+            </p>
+            <p class="lead mb-0"></p>
+            <hr />
+            <!-- Display comment count if any -->
+            {%for comment_count in post_comment_count%}
+            {%if comment_count.post_id == post.id and comment_count.num_comments > 0%}
+            {%if comment_count.num_comments > 1%}
+            <p class="">{{comment_count.num_comments}} Comments</p>
+            {%else%}
+            <p class="">{{comment_count.num_comments}} Comment</p>
+            {%endif%}
+            {%endif%}
+            {%endfor%}
+            <!-- Display comments if any -->
+            {% for comment in comments%}
+            {% if comment.post_id == post.id %}
+            <div data-commentid="{{comment.id}}" class="comments-wrapper">
+              <p>{{comment.comments}} - <a {{validate_user}} href="{{url_for('main.profile', uid=comment.user_id)}}">{{comment.user.first_name}}</a> 
+                {{comment.created_at|datetimeformat('long')}}.
+                {% if current_user.id == post.user_id and current_user.is_authenticated %}   
+                <span class="btn-remove delete-comment">Delete</span>
+                {%endif%}
+              </p>
+              <hr>
+            </div>
+            {%endif%}
+            {%endfor%}
+            {% if user == current_user.user and current_user.is_authenticated %}
+            <div data-userstatus="authenticated" class="add-comment">
+                <a href="#">add comment</a>
+            </div>
+            {%else%}
+            <div data-userstatus="not authenticated" class="add-comment">
+                <a href="#">add comment</a>
+            </div>
+            {%endif%}
+          </article>
+          {%endif%}
+          {%endfor%}
+        {%endif%}
+      </div>
+      <div class="col-md-4">
+        <div class="position-sticky" style="top: 2rem">
+          <div class="p-4 mb-3 bg-light rounded">
+            <h4 class="fst-italic">Random quote</h4>
+            <p class="blog-post-meta">
+              By <a href="#">{{random_quote.author}}</a>
+            </p>
+            <p class="mb-0">{{random_quote.quote}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  {%endif%}
 </main>
 {% include 'modals/new_post.html'%} 
 {% include 'modals/delete_post.html'%} 

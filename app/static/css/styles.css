@@ -74,6 +74,11 @@
   font-size: 15px;
   margin-bottom: 0;
 }
+.link-secondary.active{
+  color: #fff;
+  font-weight: 900;
+  text-decoration-thickness: 3px;
+}
 /*-----------------
     Modal headers
  -----------------------*/
@@ -147,7 +152,7 @@
   font-weight: 900;
 }
 /*-----------------
-    Login & Register
+    Comment
  -----------------------*/
 .add-comment {
   padding-left: 3em;

@@ -26,6 +26,9 @@
             </div>
             <input type="hidden" name="endpoint" value="{{request.endpoint}}" />
             <input class="selected-post-edit" type="hidden" name="post_id" value="" />
+            {%if request.endpoint == 'main.home' %}
+            <input type="hidden" name="active_tab" value="{{active_tab}}" />
+            {%endif%}
             <div class="div">{{edit_post_form.submit(class_="btn-submit")}}</div>
           </form>
       </div>

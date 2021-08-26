@@ -16,7 +16,10 @@
           {% set delete_comment_post = context['delete_comment_post'] %}
           {{delete_comment_post.hidden_tag()}}
           <input class="selected-comment-delete" type="hidden" name="comment_id" value="" />
-          
+          <input type="hidden" name="endpoint" value="{{request.endpoint}}" />
+          {%if request.endpoint == 'main.home' %}
+          <input type="hidden" name="active_tab" value="{{active_tab}}" />
+          {%endif%}
           <div class="modal-btn">
               <div class="row">
                 <div class="col-md-6">

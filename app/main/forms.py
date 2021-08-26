@@ -17,6 +17,7 @@ class PostForm(FlaskForm):
     post = TextAreaField('Your post',  validators=[Required()])
     title = StringField('Title', validators=[Required()])
     endpoint = StringField('Endpoint', validators=[Required()])
+    active_tab = IntegerField("Active tab")
     submit = SubmitField('Post')
 
 class AddCommentForm(FlaskForm):
@@ -26,6 +27,7 @@ class AddCommentForm(FlaskForm):
     comment = TextAreaField('Add comment', validators=[Required()])
     endpoint = StringField('Endpoint', validators=[Required()])
     post_id = IntegerField("Post id", validators=[InputRequired()])
+    active_tab = IntegerField("Active tab")
     submit = SubmitField('Add Comment')
 
 class DeleteCommentForm(FlaskForm):
@@ -33,6 +35,8 @@ class DeleteCommentForm(FlaskForm):
     Class to create delete comment form
     '''
     comment_id = IntegerField("Comment id", validators=[InputRequired()])
+    endpoint = StringField('Endpoint', validators=[Required()])
+    active_tab = IntegerField("Active tab")
     submit = SubmitField('Delete Comment')
 
 class DeletePostForm(FlaskForm):
@@ -40,6 +44,8 @@ class DeletePostForm(FlaskForm):
     Class to create delete post form
     '''
     post_id = IntegerField("Post id", validators=[InputRequired()])
+    endpoint = StringField('Endpoint', validators=[Required()])
+    active_tab = IntegerField("Active tab")
     submit = SubmitField('Delete Post')
 
 class EditPostForm(FlaskForm):
@@ -54,6 +60,7 @@ class EditPostForm(FlaskForm):
     title = StringField('Title', validators=[Required()])
     endpoint = StringField('Endpoint', validators=[Required()])
     post_id = IntegerField('Post id', validators=[InputRequired()])
+    active_tab = IntegerField("Active tab")
     submit = SubmitField('Edit Post')
 
 

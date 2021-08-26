@@ -25,7 +25,18 @@ class Category(db.Model):
         '''
         categories = Category.query.all()
         return categories
-    
+   
+    def get_category_by_id(catid):
+        '''
+        Method that retrieves category by id
+        '''
+        if catid == 0:
+            category = {"id":0,"category_name":"All categories"}
+        else:
+            category = Category.query.filter_by(id=catid).first()
+        
+        return category
+
     def save_category(self):
         '''
         Method that saves the instance of category model

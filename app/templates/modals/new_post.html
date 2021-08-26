@@ -36,6 +36,9 @@
           <div class="form-group mb-2">
             {{new_post_form.post(rows="10",cols="100",placeholder="Post detail",class_="form-control")}}
           </div>
+          {%if request.endpoint == 'main.home' %}
+          <input type="hidden" name="active_tab" value="{{active_tab}}" />
+          {%endif%}
           <input type="hidden" name="endpoint" value="{{request.endpoint}}" />
           <div class="div">{{new_post_form.submit(class_="btn-submit")}}</div>
         </form>

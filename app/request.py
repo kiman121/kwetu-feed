@@ -15,11 +15,11 @@ def get_quote():
 
     return quote_response
 
-def post_comment_count():
+def post_comment_count(catid):
     '''
     Function that gets post comments
     '''
-    posts = Post.get_posts()
+    posts = Post.get_posts(catid)
     comments = Comment.get_comments()
 
     post_comments = []
@@ -35,5 +35,26 @@ def post_comment_count():
             
             post_comments.append({"post_id":post.id, "num_comments":count})
             count = 0
+            
+    return post_comments
+
+def individual_post_comment_count(pid):
+    '''
+    Function that gets post comments
+    '''
+    post = Post.query.filter_by(id=pid).first()
+    comments = Comment.get_comments()
+
+    post_comments = []
+
+    if post:
+        post_id = post.id
+        count = 0
+        if comments:
+            for comment in comments:
+                if comment.post_id == post_id:
+                    count +=1
+        
+        post_comments.append({"post_id":post.id, "num_comments":count})
             
     return post_comments

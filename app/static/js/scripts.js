@@ -4,10 +4,21 @@ $(document).ready(function () {
         $("#add_new_post").modal("show");
     });
 
+    // $(document).on("click", ".link-secondary", function(e){
+    //     $(this).siblings(".link-secondary").toggleClass("active");
+    //     console.log($(this).data('tabid'))
+    // })
+    
+    console.log($(".nav-scroller").data("activetab"))
+
     $(document).on("click", ".delete-post", function(e){
         e.preventDefault()
-
-        var postId = $(this).parents(".blog-post").data('postid')
+        var postSection = $(this).data("section");
+        if (postSection === "other posts"){
+            var postId = $(this).parents(".blog-post").data('postid')
+        } else if (postSection === "featured post"){
+            var postId = $(this).parents(".blog-post-meta").data('postid')
+        }   
         $(".selected-post-delete").val(postId)
         $("#delete_post").modal("show");
     });
@@ -19,10 +30,19 @@ $(document).ready(function () {
     $(document).on("click", ".edit-post", function(e){
         e.preventDefault()
         // Get post values
-        var postId = $(this).parents(".blog-post").data('postid'),
-            categorId = parseInt($(this).parents('.blog-post').find('.category-id').val()),
-            postTitle = $(this).parents('.blog-post').find('.post-title').val(),
-            postDetail = $(this).parents('.blog-post').find('.post-detail').val();
+        var postSection = $(this).data("section");
+
+        if (postSection === "other posts"){
+            var postId = $(this).parents(".blog-post").data('postid'),
+                categorId = parseInt($(this).parents('.blog-post').find('.category-id').val()),
+                postTitle = $(this).parents('.blog-post').find('.post-title').val(),
+                postDetail = $(this).parents('.blog-post').find('.post-detail').val();
+        } else if (postSection === "featured post"){
+            var postId = $(this).parents(".blog-post-meta").data('postid'),
+                categorId = parseInt($(this).parents('.blog-post-meta').find('.category-id').val()),
+                postTitle = $(this).parents('.blog-post-meta').find('.post-title').val(),
+                postDetail = $(this).parents('.blog-post-meta').find('.post-detail').val();
+        }
         // Set edit form values
         $("form.form-edit-post #category").val(categorId).change();
         $("form.form-edit-post #title").val(postTitle);
